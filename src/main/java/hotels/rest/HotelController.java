@@ -1,9 +1,7 @@
 package hotels.rest;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -30,30 +28,17 @@ public class HotelController {
 		this.hotelService = hotelService;
 	}
 
-	/*
-	 * @RequestMapping(value = "", method = RequestMethod.GET, produces =
-	 * MediaType.APPLICATION_JSON_VALUE) public ResponseEntity<List<Hotel>>
-	 * getAllHotels() {
-	 *
-	 * List<Hotel> hotels = hotelService.getAll();
-	 *
-	 * if (hotels.isEmpty()) { return new ResponseEntity<>(HttpStatus.NOT_FOUND); }
-	 *
-	 * return new ResponseEntity<>(hotels, HttpStatus.OK); }
-	 */
 	@RequestMapping(value = "", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	    public ResponseEntity<List<Map<String, Object>>> getHotels() {
-	        List<Map<String, Object>> hotelsList = hotelService.getAll().stream().map(hotel -> {
-	            Map<String, Object> hotelInfo = new HashMap<>();
-	            hotelInfo.put("id", hotel.getId());
-	            hotelInfo.put("name", hotel.getName());
-	            hotelInfo.put("description", hotel.getDescription());
-	            hotelInfo.put("address", hotel.getAddress());
-	            hotelInfo.put("phone", hotel.getContacts().getPhone());
-	            return hotelInfo;
-	        }).collect(Collectors.toList());
-	        return new ResponseEntity<>(hotelsList, HttpStatus.OK);
-	    }
+	public ResponseEntity<List<Hotel>> getAllHotels() {
+
+		List<Hotel> hotels = hotelService.getAll();
+
+		if (hotels.isEmpty()) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+
+		return new ResponseEntity<>(hotels, HttpStatus.OK);
+	}
 
 	@RequestMapping(value = "{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Hotel> getProduct(@PathVariable("id") Long hotelId) {
@@ -103,6 +88,5 @@ public class HotelController {
 	public ResponseEntity<Map<String, Integer>> getHistogram(@PathVariable String param) {
 		return new ResponseEntity<>(hotelService.getHistogram(param), HttpStatus.OK);
 	}
-
 
 }
