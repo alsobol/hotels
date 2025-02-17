@@ -1,0 +1,9 @@
+hotels\model\Contact.class
+hotels\HotelsApplication.class
+hotels\service\HotelService.class
+hotels\model\Hotel.class
+hotels\service\BaseService.class
+hotels\repository\HotelRepository.class
+hotels\service\impl\HotelServiceImpl.class
+hotels\rest\HotelController.class
+hotels\model\Address.class
